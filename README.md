@@ -123,3 +123,48 @@ Asegúrate de que tu archivo `package.json` tenga el siguiente contenido mínimo
 }
 ``` 
 
+
+# Soporte para parseo de entradas en POST
+
+```javascript
+
+// Middleware integrado para parsear cuerpos JSON
+app.use(express.json());
+// Middleware integrado para parsear cuerpos codificados en URL
+app.use(express.urlencoded({ extended: true }));
+```
+* `app.use(express.json());`: Middleware para parsear cuerpos de solicitudes en formato JSON.
+* `app.use(express.urlencoded({ extended: true }));`: Middleware para parsear cuerpos de solicitudes codificados en URL (formulario).
+
+
+## Ejemplo de uso de parámetros en rutas usando una petición GET
+
+```javascript
+app.get('/users/:id', (req,res) => {
+  const id =  req.params.id;
+  res.send(`Enviando información del usuario con id =  ${id}`);
+})
+```
+
+* `app.get('/users/:id', (req,res) => { ... });`: Define una ruta que acepta un parámetro `id` en la URL.
+* `const id =  req.params.id;`: Accede al valor del parámetro `id` desde la solicitud.
+* `res.send(`Enviando información del usuario con id =  ${id}`);`: Responde con un mensaje que incluye el valor del parámetro `id`.
+* Visitar `http://localhost:3000/users/123` responderá con "Enviando información del usuario con id =  123".
+* Esto es útil para crear rutas dinámicas que pueden manejar diferentes recursos basados en los parámetros proporcionados en la URL.
+
+
+##  Ejemplo de una petición POST
+```javascript
+app.post('/data', (req, res) => {
+  const jsonData = req.body;
+  res.send(`Datos JSON recibidos: ${JSON.stringify(jsonData)}`);
+});
+```
+* `app.post('/data', (req, res) => { ... });`: Define una ruta POST que recibe datos JSON.
+* `const jsonData = req.body;`: Accede a los datos JSON enviados en el cuerpo de la solicitud.
+* `res.send(`Datos JSON recibidos: ${JSON.stringify(jsonData)}`);`: Responde con los datos JSON recibidos.
+* Visitar `http://localhost:3000/data` con una solicitud POST y un cuerpo JSON responderá con los datos enviados.
+* Puedes usar el comando curl o la aplicación postman para probar. En el caso de curl:
+```bash 
+curl -X POST http://localhost:3000/data -H "Content-Type: application/json" -d '{"key1":"value1", "key2":"value2"}'
+```
