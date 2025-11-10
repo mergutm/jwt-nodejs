@@ -18,6 +18,17 @@ app.get('/', (req, res) => {
   res.send(`Hola ${name}!, ejemplo de JS!!!`);
 });
 
+app.get('/search', (req, res) => {
+  const term = req.query.term || 'empty';
+  const category =req.query.category || 'all';
+
+  res.send(`
+      <h4> Respuesta </h4>
+      <p> Término:  ${term}</p>
+      <p> Categoria: ${category} </p>
+    `);
+})
+
 
 app.get('/users/:id', (req,res) => {
   const id =  req.params.id;

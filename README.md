@@ -168,3 +168,25 @@ app.post('/data', (req, res) => {
 ```bash 
 curl -X POST http://localhost:3000/data -H "Content-Type: application/json" -d '{"key1":"value1", "key2":"value2"}'
 ```
+
+## Busqueda usando query parameters
+```javascript
+
+app.get('/search', (req, res) => {
+  const term = req.query.term || 'empty';
+  const category =req.query.category || 'all';
+
+  res.send(`
+      <h4> Respuesta </h4>
+      <p> Término:  ${term}</p>
+      <p> Categoria: ${category} </p>
+    `);
+})
+```
+* `app.get('/search', (req, res) => { ... });`: Define una ruta GET para búsquedas.
+* `const term = req.query.term || 'empty';`: Obtiene el parámetro de consulta `term` o usa 'empty' si no está presente.
+* `const category =req.query.category || 'all';`: Obtiene el parámetro de consulta `category` o usa 'all' si no está presente.
+* `res.send(...);`: Responde con un mensaje HTML que muestra los parámetros de búsqueda.
+* Visitar `http://localhost:3000/search?term=nodejs&category=programming` responderá con los valores proporcionados en los parámetros de consulta.
+* Esto es útil para manejar búsquedas y filtros en una aplicación web.
+* Prueba diferentes combinaciones de parámetros en la URL para ver cómo responde el servidor.
